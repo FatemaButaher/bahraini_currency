@@ -16,7 +16,7 @@ st.set_page_config(
 def load_model():
     return YOLO("bestbest.pt")
 
-st.title("🇧🇭 Bahraini Currency Detection")
+st.title("Bahraini Currency Detection")
 
 st.write(
     "Detect Bahraini currency using a YOLO26 deep learning model."
@@ -45,15 +45,6 @@ else:
     uploaded_file = st.camera_input(
         "Take a photo of Bahraini currency"
     )
-
-# Confidence threshold
-confidence = st.slider(
-    "Confidence Threshold",
-    min_value=0.1,
-    max_value=1.0,
-    value=0.4,
-    step=0.05
-)
 
 if uploaded_file is not None:
 
