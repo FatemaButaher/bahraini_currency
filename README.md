@@ -1,33 +1,62 @@
-# Bahraini Currency Recognition with YOLO26
+# Bahraini Currency Recognition Using YOLO26
 
-A deep-learning object detection project that recognizes Bahraini currency notes in images.
+This project uses **YOLO26** to detect Bahraini currency notes in images. The model draws a bounding box around each detected note and shows the predicted currency class with a confidence score.
 
-## Features
+## Project Overview
 
-- Upload a currency image or take a photo with your device camera.
-- Detect notes with bounding boxes and confidence scores.
-- Download the annotated prediction image.
-- Adjust the confidence threshold.
+I trained the model using **Google Colab** and tested webcam detection using **Jupyter Notebook**. I also created a **Streamlit** app where users can upload an image or take a photo to detect Bahraini currency.
 
-## Model and training
+## Dataset
 
-- **Architecture:** Ultralytics YOLO26n object detector
-- **Dataset:** Bahraini currency images labeled in Roboflow, with 10 classes
-- **Image size:** 224 × 224
-- **Epochs:** 50
-- **Augmentations:** rotation (`degrees=10`), scale (`scale=0.2`), horizontal flip (`fliplr=0.5`), and brightness (`hsv_v=0.2`)
-- **Preprocessing:** image resizing and automatic input pixel scaling within YOLO
+- **Source:** Roboflow (Bahraini currency dataset, Version 1)
+- **Total images:** 392
+- **Classes:** 10
 
-The model was trained on Google Colab. A local Jupyter Notebook can run real-time detection using a webcam. This Streamlit app supports **photo capture**, not continuous webcam video.
+| Split | Images |
+| --- | ---: |
+| Training | 371 |
+| Validation | 11 |
+| Testing | 10 |
+| **Total** | **392** |
 
-> **Evaluation note:** The initial run logged 362 usable training images and only 11 validation images; 9 training items were ignored for mixed detection/segmentation label formats. Verify dataset annotations and use a larger independent test set before claiming generalization. Add verified Precision, Recall, mAP50, and mAP50-95 results here after final evaluation.
+During training, YOLO skipped **9 training images** because their labels mixed segmentation and detection formats. This left **362 usable training images**.
 
-## Files
+## Preprocessing and Data Augmentation
+
+Images were resized to **224 × 224** for training. YOLO handles pixel normalization automatically.
+
+| Augmentation | Setting |
+| --- | --- |
+| Rotation | `degrees=10` |
+| Zoom / scale | `scale=0.2` |
+| Horizontal flip | `fliplr=0.5` |
+| Brightness | `hsv_v=0.2` |
+
+## Model
+
+- **Model:** YOLO26 Nano (`yolo26n.pt`)
+- **Platform:** Google Colab (T4 GPU)
+- **Training configuration:** 50 epochs, image size 224
+- **Trained weights:** `best.pt`
+
+## Streamlit App
+
+The app includes:
+
+- Uploading a currency image or taking a photo
+- Detecting notes with bounding boxes
+- Showing currency labels and confidence scores
+- Adjusting the confidence threshold
+- Downloading the image with predictions
+
+The Streamlit camera option takes a **photo**. Live webcam detection was tested separately in Jupyter Notebook.
+
+## Project Files
 
 ```text
 Bahraini_Currency_Streamlit/
 ├── app.py
-├── best.pt                 # Add your trained model here
+├── best.pt                 # Add your downloaded model here
 ├── requirements.txt
 ├── packages.txt
 ├── .gitignore
@@ -36,32 +65,15 @@ Bahraini_Currency_Streamlit/
 └── README.md
 ```
 
-**Important:** `best.pt` is **not included** in the starter ZIP. Download the final file from Colab (`runs/detect/train-2/weights/best.pt`) and put it next to `app.py`.
+## Run the App
 
-## Run locally
-
-Use a terminal in the same folder:
+Put `best.pt` in the same folder as `app.py`, then run:
 
 ```bash
 pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Streamlit opens in your browser. Upload an image or take a picture to see detections.
+## Notes
 
-## Deploy on Streamlit Community Cloud
-
-1. Create a GitHub repository for this project.
-2. Upload `app.py`, `best.pt`, `requirements.txt`, `packages.txt`, `README.md`, `.gitignore`, and `.streamlit/config.toml`.
-3. Open https://share.streamlit.io and select **Create app**.
-4. Choose your repository, branch `main`, and entrypoint `app.py`.
-5. Deploy and test with a new photo.
-
-For compatibility, choose a supported Python version (for example, Python 3.11) in advanced app settings if needed. The app uses CPU inference on Streamlit Community Cloud, so speed may differ from Colab's GPU.
-
-## Next improvements
-
-- Clean mixed segmentation/detection labels in the Roboflow dataset.
-- Add more validation and test examples from unseen backgrounds and lighting conditions.
-- Measure Precision, Recall, mAP, and per-class errors.
-- Test on real phone photos without using the training images.
+The validation and test sets contain only **11 and 10 images**, so they are too small for a reliable evaluation of performance on new photos. Some training labels also need correction. The project can be improved by fixing those labels and using a larger, better-balanced validation and test set.
