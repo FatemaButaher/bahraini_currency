@@ -1,79 +1,49 @@
-# Bahraini Currency Recognition Using YOLO26
+# Bahraini Currency Recognition with YOLO26
+This project uses YOLO26 Object Detection to recognize Bahraini currency notes in images. The model draws bounding boxes around detected notes and displays their predicted classes and confidence scores.
+Project Overview
+I used Google Colab for model training and Jupyter Notebook for live webcam testing. I also created a Streamlit app to detect currency notes from uploaded images or camera photos.
+Dataset
+- Source: Roboflow — Bahraini Currency dataset, Version 2
+- Images shown for Version 2 on Roboflow: 1,075
+- Classes: 10
+- Task: Object Detection
+The train, validation, and test image counts for the Version 2 export are not included here because I have not confirmed their exact distribution.
+Preprocessing and Data Augmentation
+Images were resized to 224 × 224 during training. YOLO automatically normalizes the input pixel values.
+Method	Setting
+Rotation	degrees=10
+Zoom / scale	scale=0.2
+Horizontal flip	fliplr=0.5
+Brightness adjustment	hsv_v=0.2
 
-This project uses **YOLO26** to detect Bahraini currency notes in images. The model draws a bounding box around each detected note and shows the predicted currency class with a confidence score.
 
-## Project Overview
-
-I trained the model using **Google Colab** and tested webcam detection using **Jupyter Notebook**. I also created a **Streamlit** app where users can upload an image or take a photo to detect Bahraini currency.
-
-## Dataset
-
-- **Source:** Roboflow (Bahraini currency dataset, Version 1)
-- **Total images:** 392
-- **Classes:** 10
-
-| Split | Images |
-| --- | ---: |
-| Training | 371 |
-| Validation | 11 |
-| Testing | 10 |
-| **Total** | **392** |
-
-During training, YOLO skipped **9 training images** because their labels mixed segmentation and detection formats. This left **362 usable training images**.
-
-## Preprocessing and Data Augmentation
-
-Images were resized to **224 × 224** for training. YOLO handles pixel normalization automatically.
-
-| Augmentation | Setting |
-| --- | --- |
-| Rotation | `degrees=10` |
-| Zoom / scale | `scale=0.2` |
-| Horizontal flip | `fliplr=0.5` |
-| Brightness | `hsv_v=0.2` |
-
-## Model
-
-- **Model:** YOLO26 Nano (`yolo26n.pt`)
-- **Platform:** Google Colab (T4 GPU)
-- **Training configuration:** 50 epochs, image size 224
-- **Trained weights:** `best.pt`
-
-## Streamlit App
-
-The app includes:
-
-- Uploading a currency image or taking a photo
-- Detecting notes with bounding boxes
-- Showing currency labels and confidence scores
-- Adjusting the confidence threshold
-- Downloading the image with predictions
-
-The Streamlit camera option takes a **photo**. Live webcam detection was tested separately in Jupyter Notebook.
-
-## Project Files
-
-```text
-Bahraini_Currency_Streamlit/
+Model Training
+- Model architecture: YOLO26 Nano (yolo26n.pt)
+- Environment: Google Colab
+- Training configuration: 50 epochs, imgsz=224
+- Saved model file: best.pt
+Testing and Streamlit App
+I tested camera-based detection in Jupyter Notebook. The Streamlit app allows users to:
+- Upload an image or take a photo
+- Detect notes and display bounding boxes
+- View predicted currency labels and confidence scores
+- Change the confidence threshold
+- Download the annotated result
+Note: Streamlit's camera option captures a photo, not continuous live video.
+Project Files
+Bahraini_Currency_Streamlit_V2/
 ├── app.py
-├── best.pt                 # Add your downloaded model here
+├── best.pt                # Add your trained Version 2 model here
 ├── requirements.txt
 ├── packages.txt
 ├── .gitignore
 ├── .streamlit/
 │   └── config.toml
 └── README.md
-```
-
-## Run the App
-
-Put `best.pt` in the same folder as `app.py`, then run:
-
-```bash
+How to Run
+1. Place the Version 2 best.pt file next to app.py.
+2. Install the dependencies and run the app:
 pip install -r requirements.txt
 streamlit run app.py
-```
-
-## Notes
-
-The validation and test sets contain only **11 and 10 images**, so they are too small for a reliable evaluation of performance on new photos. Some training labels also need correction. The project can be improved by fixing those labels and using a larger, better-balanced validation and test set.
+Limitations
+Performance can be affected by lighting, distance, camera angle, background, and the quality of the training labels. The project results should be assessed on unseen images before making claims about accuracy. Final evaluation metrics are not reported here because they have not been confirmed for Version 2.
