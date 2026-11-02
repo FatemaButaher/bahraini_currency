@@ -1,4 +1,4 @@
-# 🇧🇭 Bahraini Currency Recognition with YOLO26
+# Bahraini Currency Recognition with YOLO26
 
 A deep-learning object detection project that recognizes Bahraini currency notes in images.
 
