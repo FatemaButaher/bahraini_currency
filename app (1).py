@@ -6,7 +6,7 @@ from pathlib import Path
 import io
 
 st.set_page_config(
-    page_title="Bahraini Currency Detection",
+    page_title="🪙Bahraini Currency Detection🪙",
     page_icon="💵",
     layout="centered"
 )
