@@ -6,7 +6,7 @@ from pathlib import Path
 import io
 
 st.set_page_config(
-    page_title="🪙Bahraini Currency Detection🪙",
+    page_title="Bahraini Currency Detection",
     page_icon="💵",
     layout="centered"
 )
@@ -16,7 +16,7 @@ st.set_page_config(
 def load_model():
     return YOLO("bestbest.pt")
 
-st.title("Bahraini Currency Detection")
+st.title("🪙Bahraini Currency Detection🪙")
 
 st.write(
     "Detect Bahraini currency using a YOLO26 deep learning model."
