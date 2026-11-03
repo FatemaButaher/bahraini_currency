@@ -7,7 +7,7 @@ import io
 
 st.set_page_config(
     page_title="Bahraini Currency Detection",
-    page_icon="🇧🇭",
+    page_icon="💵",
     layout="centered"
 )
 
