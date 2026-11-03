@@ -6,7 +6,7 @@ This project uses **YOLO26 Object Detection** to recognize Bahraini currency not
 
 I used **Google Colab** for model training and **Jupyter Notebook** for live webcam testing. I also created a **Streamlit** app to detect currency notes from uploaded images or camera photos.
 
-## APP: https://bahrainicurrency-gvtgsaor8naspnpjfmgcmp.streamlit.app/
+## APP: `https://bahrainicurrency-gvtgsaor8naspnpjfmgcmp.streamlit.app/`
 
 ## Dataset
 
